@@ -49,12 +49,24 @@ var SynthGenerator = yeoman.generators.Base.extend({
   app: function () {
     this.mkdir('back');
 	this.mkdir('back/resources');
-    this.mkdir('front');
-
-	this.copy('back/back-app.js','back/back-app.js');
+    this.copy('back/back-app.js','back/back-app.js');
+	  
+	this.mkdir('front');
+	this.mkdir('front/html');
+	this.mkdir('front/css');
+	this.mkdir('front/cjs/controllers');
+	  
 	this.copy('front/index.jade','front/index.jade');
+	this.directory('front/misc');
+	this.directory('front/images');
 	
-	//TODO copy tweets sample  
+	//TODO copy tweets sample
+	if(this.tweetExample) {
+	  this.directory('back/resources/tweets');
+      this.directory('front/css');
+	  this.directory('front/js');
+      this.directory('front/html/tweets');
+	}
 	 
     this.template('back/_package.json', 'back/package.json');
     this.template('front/_bower.json', 'front/bower.json');
