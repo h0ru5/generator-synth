@@ -13,7 +13,10 @@ var SynthGenerator = yeoman.generators.Base.extend({
       if (!this.options['skip-install']) {
 		//TODO install modules
 		//this.installDependencies();
-		this.log(chalk.green('Don\'t forget to run npm install in the back dir or simply run synth install -f -b'));
+		
+		this.log(chalk.green('\nDon\'t forget to run ') + chalk.yellow('npm install') + chalk.green(' in the back dir'));
+		this.log(chalk.green('And ') +chalk.yellow('bower install') +  chalk.green(' in the front dir'));
+		this.log(chalk.green('Or install synth globally and simply run ') + chalk.yellow('synth install -f -b') + chalk.green(' from the root dir'));
       }
     });
   },
@@ -24,7 +27,6 @@ var SynthGenerator = yeoman.generators.Base.extend({
     // have Yeoman greet the user
     this.log(this.yeoman);
 
-   
     this.log(chalk.magenta('So let\'s scaffold a syth app for you'));
 
     var prompts = [{
@@ -33,14 +35,13 @@ var SynthGenerator = yeoman.generators.Base.extend({
 	},{ 
 	  type: 'confirm',
       name: 'tweetExample',
-      message: 'Would you like to have the tweets example code?',
+      message: 'Would you like to have the example code?',
       default: true
     }];
 
     this.prompt(prompts, function (props) {
       this.tweetExample = props.tweetExample;
       this.appName = props.appName;
-		
 		
       done();
     }.bind(this));
@@ -50,20 +51,19 @@ var SynthGenerator = yeoman.generators.Base.extend({
     this.directory('back');
 	this.directory('front');
 		
-	//TODO copy tweets sample
 	if(this.tweetExample) {
 	  this.directory('example/front','front');
 	  this.directory('example/back','back');
 	}
-	 
-    this.template('_package.json', 'back/package.json');
-    this.template('_bower.json', 'front/bower.json');
-	this.template('_synth.json','synth.json');
   },
 
   projectfiles: function () {
     this.copy('editorconfig', '.editorconfig');
     this.copy('jshintrc', '.jshintrc');
+	
+	this.template('_package.json', 'back/package.json');
+    this.template('_bower.json', 'front/bower.json');
+	this.template('_synth.json','synth.json');
   }
 });
 
