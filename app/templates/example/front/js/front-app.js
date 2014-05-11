@@ -8,9 +8,15 @@ var dataLoaderRunner = [
 angular.module('<%= appName %>', ['ngRoute'])
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider
-  //insert when statements here
+  .when('/tweets', {
+    templateUrl: '/html/tweets/getIndex.html',
+    controller: 'tweetsController',
+    resolve: {
+      data: dataLoaderRunner
+    }
+  })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/tweets'
   });
 
   $locationProvider.html5Mode(true);
